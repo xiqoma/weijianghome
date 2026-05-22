@@ -17,7 +17,6 @@ import {
   RotateCcw,
   Search,
   Send,
-  Sparkles,
   Store,
   UploadCloud,
   WandSparkles,
@@ -33,7 +32,7 @@ import {
 } from './data'
 import type { Product } from './data'
 
-type AssistantMode = '售前' | '售后' | '商家'
+type AssistantMode = '鍞墠' | '鍞悗' | '鍟嗗'
 type ModalKind = 'search' | 'ar' | 'upload' | 'plan' | null
 
 type ChatMessage = {
@@ -55,10 +54,10 @@ function App() {
   const [scale, setScale] = useState(92)
   const [angle, setAngle] = useState(12)
   const [accessibility, setAccessibility] = useState(false)
-  const [assistantMode, setAssistantMode] = useState<AssistantMode>('售前')
+  const [assistantMode, setAssistantMode] = useState<AssistantMode>('鍞墠')
   const [activeNav, setActiveNav] = useState(navItems[0].label)
   const [modal, setModal] = useState<ModalKind>(null)
-  const [toast, setToast] = useState('线上演示已接入生成场景图与交互状态')
+  const [toast, setToast] = useState('绾夸笂婕旂ず宸叉帴鍏ョ敓鎴愬満鏅浘涓庝氦浜掔姸鎬?)
   const [cartCount, setCartCount] = useState(3)
   const [searchQuery, setSearchQuery] = useState('')
   const [uploadTarget, setUploadTarget] = useState(products[0].id)
@@ -66,10 +65,10 @@ function App() {
   const [selectedModule, setSelectedModule] = useState(modules[0].label)
   const [chatInput, setChatInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'user', text: '这张户型图客厅能放 2.7 米沙发吗？' },
+    { role: 'user', text: '杩欏紶鎴峰瀷鍥惧鍘呰兘鏀?2.7 绫虫矙鍙戝悧锛? },
     {
       role: 'agent',
-      text: '可以。结合客厅开间、阳台动线和商品尺寸，建议摆放 2.68 米模块沙发，通道约 860mm。',
+      text: '鍙互銆傜粨鍚堝鍘呭紑闂淬€侀槼鍙板姩绾垮拰鍟嗗搧灏哄锛屽缓璁憜鏀?2.68 绫虫ā鍧楁矙鍙戯紝閫氶亾绾?860mm銆?,
     },
   ])
 
@@ -92,14 +91,14 @@ function App() {
     setToast(message)
   }
 
-  const selectProduct = (product: Product, message = `已切换到 ${product.name}`) => {
+  const selectProduct = (product: Product, message = `宸插垏鎹㈠埌 ${product.name}`) => {
     setSelectedId(product.id)
     setToast(message)
   }
 
   const handleExport = () => {
     const payload = {
-      project: 'WeijiangHome / 唯匠家居',
+      project: 'WeijiangHome / 鍞尃瀹跺眳',
       selectedProduct: selected,
       orders,
       modules: modules.map(({ label, progress, state }) => ({ label, progress, state })),
@@ -117,24 +116,24 @@ function App() {
     link.download = 'weijianghome-export.json'
     link.click()
     URL.revokeObjectURL(link.href)
-    setToast('已生成并下载项目数据导出文件')
+    setToast('宸茬敓鎴愬苟涓嬭浇椤圭洰鏁版嵁瀵煎嚭鏂囦欢')
   }
 
   const addToCart = () => {
     setCartCount((count) => count + 1)
-    setToast(`${selected.name} 已加入购物车，当前 ${cartCount + 1} 件`)
+    setToast(`${selected.name} 宸插姞鍏ヨ喘鐗╄溅锛屽綋鍓?${cartCount + 1} 浠禶)
   }
 
   const sendMessage = () => {
     const question = chatInput.trim()
     if (!question) {
-      setToast('请输入 AI 客服问题')
+      setToast('璇疯緭鍏?AI 瀹㈡湇闂')
       return
     }
     const replyByMode: Record<AssistantMode, string> = {
-      售前: `已按 ${selected.name} 的尺寸、材质和当前户型给出搭配建议，可继续切换商品查看空间适配。`,
-      售后: `已定位到最近订单，可继续处理发票申请、配送进度和售后备注。`,
-      商家: `已进入商家模式，可继续查询商品置顶顺序、模型上传状态和订单导出。`,
+      鍞墠: `宸叉寜 ${selected.name} 鐨勫昂瀵搞€佹潗璐ㄥ拰褰撳墠鎴峰瀷缁欏嚭鎼厤寤鸿锛屽彲缁х画鍒囨崲鍟嗗搧鏌ョ湅绌洪棿閫傞厤銆俙,
+      鍞悗: `宸插畾浣嶅埌鏈€杩戣鍗曪紝鍙户缁鐞嗗彂绁ㄧ敵璇枫€侀厤閫佽繘搴﹀拰鍞悗澶囨敞銆俙,
+      鍟嗗: `宸茶繘鍏ュ晢瀹舵ā寮忥紝鍙户缁煡璇㈠晢鍝佺疆椤堕『搴忋€佹ā鍨嬩笂浼犵姸鎬佸拰璁㈠崟瀵煎嚭銆俙,
     }
     setMessages((items) => [
       ...items,
@@ -142,7 +141,7 @@ function App() {
       { role: 'agent', text: replyByMode[assistantMode] },
     ])
     setChatInput('')
-    setToast('AI 客服已生成回复')
+    setToast('AI 瀹㈡湇宸茬敓鎴愬洖澶?)
   }
 
   const confirmUpload = () => {
@@ -150,17 +149,17 @@ function App() {
     const product = products.find((item) => item.id === uploadTarget) ?? products[0]
     setSelectedId(product.id)
     setModal(null)
-    setToast(`${product.name} 的 3D 模型已标记为已上传`)
+    setToast(`${product.name} 鐨?3D 妯″瀷宸叉爣璁颁负宸蹭笂浼燻)
   }
 
   return (
     <main className={accessibility ? 'app app--accessible' : 'app'}>
-      <aside className="sidebar" aria-label="唯匠家居产品导航">
+      <aside className="sidebar" aria-label="鍞尃瀹跺眳浜у搧瀵艰埅">
         <a className="brand" href="#top" aria-label="WeijiangHome">
           <span className="brand-mark">WJ</span>
           <span>
             <strong>WeijiangHome</strong>
-            <small>唯匠家居</small>
+            <small>鍞尃瀹跺眳</small>
           </span>
         </a>
         <nav className="nav-list">
@@ -171,7 +170,7 @@ function App() {
               key={item.label}
               onClick={() => {
                 setActiveNav(item.label)
-                setToast(`已进入 ${item.label} 模块`)
+                setToast(`宸茶繘鍏?${item.label} 妯″潡`)
               }}
             >
               <item.icon size={18} aria-hidden="true" />
@@ -189,24 +188,24 @@ function App() {
       <section className="workspace" id="top">
         <header className="topbar">
           <div>
-            <p className="eyeline">家具零售 + AR 空间预览 + 商家后台</p>
-            <h1>唯匠家居全栈工作台</h1>
+            <p className="eyeline">瀹跺叿闆跺敭 + AR 绌洪棿棰勮 + 鍟嗗鍚庡彴</p>
+            <h1>鍞尃瀹跺眳鍏ㄦ爤宸ヤ綔鍙?/h1>
           </div>
-          <div className="topbar-actions" aria-label="全局操作">
+          <div className="topbar-actions" aria-label="鍏ㄥ眬鎿嶄綔">
             <button
               className="icon-button"
               type="button"
-              title="搜索商品、订单和用户"
-              aria-label="搜索商品、订单和用户"
-              onClick={() => openModal('search', '搜索面板已打开')}
+              title="鎼滅储鍟嗗搧銆佽鍗曞拰鐢ㄦ埛"
+              aria-label="鎼滅储鍟嗗搧銆佽鍗曞拰鐢ㄦ埛"
+              onClick={() => openModal('search', '鎼滅储闈㈡澘宸叉墦寮€')}
             >
               <Search size={18} />
             </button>
             <button
               className="icon-button"
               type="button"
-              title="导出订单数据"
-              aria-label="导出订单数据"
+              title="瀵煎嚭璁㈠崟鏁版嵁"
+              aria-label="瀵煎嚭璁㈠崟鏁版嵁"
               onClick={handleExport}
             >
               <ArrowDownToLine size={18} />
@@ -216,21 +215,20 @@ function App() {
               type="button"
               onClick={() => {
                 setAccessibility((value) => !value)
-                setToast(accessibility ? '已关闭无障碍模式' : '已开启无障碍模式')
+                setToast(accessibility ? '宸插叧闂棤闅滅妯″紡' : '宸插紑鍚棤闅滅妯″紡')
               }}
               aria-pressed={accessibility}
             >
               <Eye size={17} aria-hidden="true" />
-              无障碍模式
-            </button>
+              鏃犻殰纰嶆ā寮?            </button>
           </div>
         </header>
 
-        <section className="metric-grid" aria-label="项目实时指标">
-          <Metric label="订单 GMV" value={formatCurrency(totalRevenue)} trend="+24.6%" onClick={handleExport} />
-          <Metric label="AR 预览转化" value="37.2%" trend="+8.4%" onClick={() => openModal('ar', 'AR 全屏预览已打开')} />
-          <Metric label="模块完成度" value={`${moduleScore}%`} trend="7/9 modules" onClick={() => setToast(`${activeModule.label}：${activeModule.state}`)} />
-          <Metric label="AI Agent 协作" value="5 工具链" trend="长上下文" onClick={() => setActiveNav('AI 客服')} />
+        <section className="metric-grid" aria-label="椤圭洰瀹炴椂鎸囨爣">
+          <Metric label="璁㈠崟 GMV" value={formatCurrency(totalRevenue)} trend="+24.6%" onClick={handleExport} />
+          <Metric label="AR 棰勮杞寲" value="37.2%" trend="+8.4%" onClick={() => openModal('ar', 'AR 鍏ㄥ睆棰勮宸叉墦寮€')} />
+          <Metric label="妯″潡瀹屾垚搴? value={`${moduleScore}%`} trend="7/9 modules" onClick={() => setToast(`${activeModule.label}锛?{activeModule.state}`)} />
+          <Metric label="AI Agent 鍗忎綔" value="5 宸ュ叿閾? trend="闀夸笂涓嬫枃" onClick={() => setActiveNav('AI 瀹㈡湇')} />
         </section>
 
         <section className="hero-grid">
@@ -247,7 +245,7 @@ function App() {
             selected={selected}
             setAngle={setAngle}
             setScale={setScale}
-            openFullscreen={() => openModal('ar', 'AR 全屏预览已打开')}
+            openFullscreen={() => openModal('ar', 'AR 鍏ㄥ睆棰勮宸叉墦寮€')}
           />
           <EvidencePanel
             assistantMode={assistantMode}
@@ -256,7 +254,7 @@ function App() {
             sendMessage={sendMessage}
             setAssistantMode={(mode) => {
               setAssistantMode(mode)
-              setToast(`AI 客服已切换到${mode}模式`)
+              setToast(`AI 瀹㈡湇宸插垏鎹㈠埌${mode}妯″紡`)
             }}
             setChatInput={setChatInput}
           />
@@ -267,16 +265,16 @@ function App() {
             selectedId={selectedId}
             selectProduct={selectProduct}
             uploadedModels={uploadedModels}
-            openUpload={() => openModal('upload', '模型上传面板已打开')}
+            openUpload={() => openModal('upload', '妯″瀷涓婁紶闈㈡澘宸叉墦寮€')}
           />
           <DataBoard
             activeModule={activeModule}
             selectedModule={selectedModule}
             setSelectedModule={(label) => {
               setSelectedModule(label)
-              setToast(`已查看 ${label} 模块状态`)
+              setToast(`宸叉煡鐪?${label} 妯″潡鐘舵€乣)
             }}
-            openPlan={() => openModal('plan', '户型尺寸图已打开')}
+            openPlan={() => openModal('plan', '鎴峰瀷灏哄鍥惧凡鎵撳紑')}
           />
         </section>
       </section>
@@ -284,11 +282,11 @@ function App() {
       {toast && <div className="toast" role="status">{toast}</div>}
 
       {modal === 'search' && (
-        <Modal title="全局搜索" onClose={() => setModal(null)}>
+        <Modal title="鍏ㄥ眬鎼滅储" onClose={() => setModal(null)}>
           <div className="search-panel">
             <input
               autoFocus
-              placeholder="搜索商品、材质、订单..."
+              placeholder="鎼滅储鍟嗗搧銆佹潗璐ㄣ€佽鍗?.."
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -298,7 +296,7 @@ function App() {
                   type="button"
                   key={product.id}
                   onClick={() => {
-                    selectProduct(product, `搜索命中并打开 ${product.name}`)
+                    selectProduct(product, `鎼滅储鍛戒腑骞舵墦寮€ ${product.name}`)
                     setModal(null)
                   }}
                 >
@@ -310,7 +308,7 @@ function App() {
                 </button>
               ))}
               {orders.map((order) => (
-                <button type="button" key={order.id} onClick={() => setToast(`已定位订单 ${order.id}`)}>
+                <button type="button" key={order.id} onClick={() => setToast(`宸插畾浣嶈鍗?${order.id}`)}>
                   <PackageCheck size={20} aria-hidden="true" />
                   <span>
                     <strong>{order.id}</strong>
@@ -324,7 +322,7 @@ function App() {
       )}
 
       {modal === 'ar' && (
-        <Modal title="AR 空间预览" onClose={() => setModal(null)}>
+        <Modal title="AR 绌洪棿棰勮" onClose={() => setModal(null)}>
           <div className="ar-modal-preview">
             <ArScene angle={angle} scale={scale} selected={selected} />
           </div>
@@ -332,10 +330,10 @@ function App() {
       )}
 
       {modal === 'upload' && (
-        <Modal title="上传 3D 模型" onClose={() => setModal(null)}>
+        <Modal title="涓婁紶 3D 妯″瀷" onClose={() => setModal(null)}>
           <div className="upload-panel">
             <label>
-              选择商品
+              閫夋嫨鍟嗗搧
               <select value={uploadTarget} onChange={(event) => setUploadTarget(event.target.value)}>
                 {products.map((product) => (
                   <option value={product.id} key={product.id}>{product.name}</option>
@@ -344,16 +342,16 @@ function App() {
             </label>
             <div className="drop-zone">
               <UploadCloud size={28} aria-hidden="true" />
-              <strong>模拟上传 GLB / USDZ / 贴图包</strong>
-              <span>演示环境会直接写入“已上传”状态</span>
+              <strong>妯℃嫙涓婁紶 GLB / USDZ / 璐村浘鍖?/strong>
+              <span>婕旂ず鐜浼氱洿鎺ュ啓鍏モ€滃凡涓婁紶鈥濈姸鎬?/span>
             </div>
-            <button className="primary-action" type="button" onClick={confirmUpload}>确认上传</button>
+            <button className="primary-action" type="button" onClick={confirmUpload}>纭涓婁紶</button>
           </div>
         </Modal>
       )}
 
       {modal === 'plan' && (
-        <Modal title="户型尺寸与 AR 点位" onClose={() => setModal(null)}>
+        <Modal title="鎴峰瀷灏哄涓?AR 鐐逛綅" onClose={() => setModal(null)}>
           <PlanView large />
         </Modal>
       )}
@@ -401,14 +399,14 @@ function MiniProgramPanel({
           <CircleUserRound size={18} aria-hidden="true" />
         </span>
         <div>
-          <p>用户端小程序</p>
-          <h2 id="mini-title">微信登录、商品详情、购物车</h2>
+          <p>鐢ㄦ埛绔皬绋嬪簭</p>
+          <h2 id="mini-title">寰俊鐧诲綍銆佸晢鍝佽鎯呫€佽喘鐗╄溅</h2>
         </div>
       </div>
       <div className="phone-frame">
         <div className="phone-status">
-          <span>唯匠家居</span>
-          <LockKeyhole size={14} aria-label="微信登录" />
+          <span>鍞尃瀹跺眳</span>
+          <LockKeyhole size={14} aria-label="寰俊鐧诲綍" />
         </div>
         <div
           className="phone-hero"
@@ -416,10 +414,10 @@ function MiniProgramPanel({
             backgroundImage: `linear-gradient(180deg, rgba(16, 18, 14, 0.1), rgba(16, 18, 14, 0.72)), url("${assetUrl('generated-room.png')}")`,
           }}
         >
-          <strong>客厅套装预约</strong>
-          <small>签到积分可抵 ¥80</small>
+          <strong>瀹㈠巺濂楄棰勭害</strong>
+          <small>绛惧埌绉垎鍙姷 楼80</small>
         </div>
-        <div className="product-switcher" aria-label="商品选择">
+        <div className="product-switcher" aria-label="鍟嗗搧閫夋嫨">
           {products.map((product) => (
             <button
               className={product.id === selectedId ? 'product-pill is-active' : 'product-pill'}
@@ -433,8 +431,8 @@ function MiniProgramPanel({
         </div>
         <article className="product-card">
           <button className="product-image-button" type="button" onClick={addToCart}>
-            <img src={assetUrl(selected.image)} alt={`${selected.name} 商品图`} />
-            <span>加入购物车</span>
+            <img src={assetUrl(selected.image)} alt={`${selected.name} 鍟嗗搧鍥綻} />
+            <span>鍔犲叆璐墿杞?/span>
           </button>
           <div>
             <p>{selected.category}</p>
@@ -444,10 +442,10 @@ function MiniProgramPanel({
           <strong>{formatCurrency(selected.price)}</strong>
         </article>
         <div className="checkout-bar">
-          <span>购物车 {cartCount} 件</span>
+          <span>璐墿杞?{cartCount} 浠?/span>
           <button type="button" onClick={addToCart}>
             <PackageCheck size={15} aria-hidden="true" />
-            提交订单
+            鎻愪氦璁㈠崟
           </button>
         </div>
       </div>
@@ -477,10 +475,10 @@ function ArPreviewPanel({
           <Layers3 size={18} aria-hidden="true" />
         </span>
         <div>
-          <p>AR 空间预览</p>
-          <h2 id="ar-title">生成场景内的家具模型摆放</h2>
+          <p>AR 绌洪棿棰勮</p>
+          <h2 id="ar-title">鐢熸垚鍦烘櫙鍐呯殑瀹跺叿妯″瀷鎽嗘斁</h2>
         </div>
-        <button className="icon-button" type="button" title="全屏预览" aria-label="全屏预览" onClick={openFullscreen}>
+        <button className="icon-button" type="button" title="鍏ㄥ睆棰勮" aria-label="鍏ㄥ睆棰勮" onClick={openFullscreen}>
           <Maximize2 size={17} />
         </button>
       </div>
@@ -489,14 +487,14 @@ function ArPreviewPanel({
 
       <div className="controls-row">
         <label>
-          <span>缩放</span>
+          <span>缂╂斁</span>
           <input type="range" min="72" max="118" value={scale} onChange={(event) => setScale(Number(event.target.value))} />
           <output>{scale}%</output>
         </label>
         <label>
-          <span>旋转</span>
+          <span>鏃嬭浆</span>
           <input type="range" min="-28" max="28" value={angle} onChange={(event) => setAngle(Number(event.target.value))} />
-          <output>{angle}°</output>
+          <output>{angle}掳</output>
         </label>
         <button
           className="icon-button"
@@ -505,8 +503,8 @@ function ArPreviewPanel({
             setScale(92)
             setAngle(12)
           }}
-          title="重置模型"
-          aria-label="重置模型"
+          title="閲嶇疆妯″瀷"
+          aria-label="閲嶇疆妯″瀷"
         >
           <RotateCcw size={17} />
         </button>
@@ -518,14 +516,14 @@ function ArPreviewPanel({
 function ArScene({ angle, scale, selected }: { angle: number; scale: number; selected: Product }) {
   return (
     <div className="room-preview">
-      <img src={assetUrl('generated-room.png')} alt="AI 生成的现代客厅 AR 场景" />
+      <img src={assetUrl('generated-room.png')} alt="AI 鐢熸垚鐨勭幇浠ｅ鍘?AR 鍦烘櫙" />
       <div className="scan-line" aria-hidden="true" />
-      <div className="space-tag space-tag--one">墙面 3.2m</div>
-      <div className="space-tag space-tag--two">阳台采光</div>
+      <div className="space-tag space-tag--one">澧欓潰 3.2m</div>
+      <div className="space-tag space-tag--two">闃冲彴閲囧厜</div>
       <img
         className={`virtual-product virtual-product--${selected.shape}`}
         src={assetUrl(selected.image)}
-        alt={`${selected.name} AR 模型`}
+        alt={`${selected.name} AR 妯″瀷`}
         style={{
           left: `${selected.position.left}%`,
           top: `${selected.position.top}%`,
@@ -535,7 +533,7 @@ function ArScene({ angle, scale, selected }: { angle: number; scale: number; sel
       />
       <div className="fit-score">
         <Gauge size={17} aria-hidden="true" />
-        空间匹配 94%
+        绌洪棿鍖归厤 94%
       </div>
     </div>
   )
@@ -564,11 +562,11 @@ function EvidencePanel({
         </span>
         <div>
           <p>Token Plan Evidence</p>
-          <h2 id="evidence-title">AI 客服与 Agent 工作流证明</h2>
+          <h2 id="evidence-title">AI 瀹㈡湇涓?Agent 宸ヤ綔娴佽瘉鏄?/h2>
         </div>
       </div>
-      <div className="assistant-tabs" role="tablist" aria-label="AI 客服模式">
-        {(['售前', '售后', '商家'] as const).map((mode) => (
+      <div className="assistant-tabs" role="tablist" aria-label="AI 瀹㈡湇妯″紡">
+        {(['鍞墠', '鍞悗', '鍟嗗'] as const).map((mode) => (
           <button
             className={assistantMode === mode ? 'assistant-tab is-active' : 'assistant-tab'}
             type="button"
@@ -599,8 +597,8 @@ function EvidencePanel({
           sendMessage()
         }}
       >
-        <input aria-label="AI 客服输入" value={chatInput} onChange={(event) => setChatInput(event.target.value)} placeholder={`当前模式：${assistantMode}`} />
-        <button type="submit" aria-label="发送">
+        <input aria-label="AI 瀹㈡湇杈撳叆" value={chatInput} onChange={(event) => setChatInput(event.target.value)} placeholder={`褰撳墠妯″紡锛?{assistantMode}`} />
+        <button type="submit" aria-label="鍙戦€?>
           <Send size={16} />
         </button>
       </form>
@@ -626,24 +624,24 @@ function MerchantPanel({
           <Store size={18} aria-hidden="true" />
         </span>
         <div>
-          <p>商家后台</p>
-          <h2 id="merchant-title">商品管理、订单管理、数据导出</h2>
+          <p>鍟嗗鍚庡彴</p>
+          <h2 id="merchant-title">鍟嗗搧绠＄悊銆佽鍗曠鐞嗐€佹暟鎹鍑?/h2>
         </div>
         <button className="text-button" type="button" onClick={openUpload}>
           <UploadCloud size={17} aria-hidden="true" />
-          上传模型
+          涓婁紶妯″瀷
         </button>
       </div>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>置顶</th>
-              <th>商品</th>
-              <th>模型</th>
-              <th>库存</th>
-              <th>转化</th>
-              <th>操作</th>
+              <th>缃《</th>
+              <th>鍟嗗搧</th>
+              <th>妯″瀷</th>
+              <th>搴撳瓨</th>
+              <th>杞寲</th>
+              <th>鎿嶄綔</th>
             </tr>
           </thead>
           <tbody>
@@ -654,12 +652,12 @@ function MerchantPanel({
                   <strong>{product.name}</strong>
                   <span>{product.material}</span>
                 </td>
-                <td>{uploadedModels.includes(product.id) ? '刚刚上传' : product.modelStatus}</td>
+                <td>{uploadedModels.includes(product.id) ? '鍒氬垰涓婁紶' : product.modelStatus}</td>
                 <td>{product.inventory}</td>
                 <td>{product.conversion}</td>
                 <td>
-                  <button type="button" onClick={() => selectProduct(product, `后台已预览 ${product.name}`)}>
-                    预览
+                  <button type="button" onClick={() => selectProduct(product, `鍚庡彴宸查瑙?${product.name}`)}>
+                    棰勮
                     <ChevronRight size={14} aria-hidden="true" />
                   </button>
                 </td>
@@ -668,7 +666,7 @@ function MerchantPanel({
           </tbody>
         </table>
       </div>
-      <div className="order-strip" aria-label="近期订单">
+      <div className="order-strip" aria-label="杩戞湡璁㈠崟">
         {orders.map((order) => (
           <button className="order-item" type="button" key={order.id}>
             <span>{order.id}</span>
@@ -699,8 +697,8 @@ function DataBoard({
           <Database size={18} aria-hidden="true" />
         </span>
         <div>
-          <p>数据看板</p>
-          <h2 id="data-title">长上下文开发消耗与模块状态</h2>
+          <p>鏁版嵁鐪嬫澘</p>
+          <h2 id="data-title">闀夸笂涓嬫枃寮€鍙戞秷鑰椾笌妯″潡鐘舵€?/h2>
         </div>
       </div>
       <div className="module-list">
@@ -724,7 +722,7 @@ function DataBoard({
         <PlanView />
         <div>
           <FileSpreadsheet size={18} aria-hidden="true" />
-          {activeModule.label}：{activeModule.state}，进度 {activeModule.progress}%
+          {activeModule.label}锛歿activeModule.state}锛岃繘搴?{activeModule.progress}%
         </div>
       </button>
       <div className="agent-checklist">
@@ -735,22 +733,17 @@ function DataBoard({
           </button>
         ))}
       </div>
-      <div className="launch-note">
-        <Sparkles size={18} aria-hidden="true" />
-        适合提交“GitHub 项目链接或产品在线演示地址”
-      </div>
-    </section>
   )
 }
 
 function PlanView({ large = false }: { large?: boolean }) {
   return (
     <figure className={large ? 'plan-view plan-view--large' : 'plan-view'}>
-      <img src={assetUrl('generated-plan.png')} alt="AI 生成的户型尺寸图" />
+      <img src={assetUrl('generated-plan.png')} alt="AI 鐢熸垚鐨勬埛鍨嬪昂瀵稿浘" />
       <figcaption>
-        <span className="plan-chip plan-chip--living">客厅 4.2m</span>
-        <span className="plan-chip plan-chip--balcony">阳台 3.0m</span>
-        <span className="plan-chip plan-chip--route">动线 860mm</span>
+        <span className="plan-chip plan-chip--living">瀹㈠巺 4.2m</span>
+        <span className="plan-chip plan-chip--balcony">闃冲彴 3.0m</span>
+        <span className="plan-chip plan-chip--route">鍔ㄧ嚎 860mm</span>
       </figcaption>
     </figure>
   )
@@ -762,7 +755,7 @@ function Modal({ title, children, onClose }: { title: string; children: ReactNod
       <section className="modal" role="dialog" aria-modal="true" aria-label={title} onMouseDown={(event) => event.stopPropagation()}>
         <header className="modal-header">
           <h2>{title}</h2>
-          <button className="icon-button" type="button" aria-label="关闭" onClick={onClose}>
+          <button className="icon-button" type="button" aria-label="鍏抽棴" onClick={onClose}>
             <X size={18} />
           </button>
         </header>
