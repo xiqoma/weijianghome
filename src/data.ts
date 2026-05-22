@@ -29,6 +29,8 @@ export type Product = {
   dimensions: string
   material: string
   modelStatus: string
+  image: string
+  position: { left: number; top: number; width: number }
   inventory: number
   topOrder: number
   conversion: string
@@ -69,6 +71,8 @@ export const products: Product[] = [
     dimensions: '2680 x 930 x 780mm',
     material: '棉麻 + 白蜡木',
     modelStatus: 'GLB 已上传',
+    image: 'product-sofa.png',
+    position: { left: 58, top: 76, width: 42 },
     inventory: 36,
     topOrder: 1,
     conversion: '18.7%',
@@ -82,6 +86,8 @@ export const products: Product[] = [
     dimensions: '1600 x 420 x 860mm',
     material: '胡桃木贴面',
     modelStatus: '贴图待压缩',
+    image: 'product-cabinet.png',
+    position: { left: 42, top: 62, width: 35 },
     inventory: 14,
     topOrder: 2,
     conversion: '12.4%',
@@ -95,6 +101,8 @@ export const products: Product[] = [
     dimensions: '1380 x 1380 x 750mm',
     material: '岩板 + 碳钢',
     modelStatus: 'USDZ 已生成',
+    image: 'product-table.png',
+    position: { left: 56, top: 68, width: 26 },
     inventory: 21,
     topOrder: 3,
     conversion: '15.9%',

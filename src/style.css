@@ -53,6 +53,13 @@ button {
   cursor: pointer;
 }
 
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
 .app {
   min-height: 100vh;
   display: grid;
@@ -138,7 +145,8 @@ button {
 }
 
 .nav-item:hover,
-.nav-item:focus-visible {
+.nav-item:focus-visible,
+.nav-item.is-active {
   outline: 0;
   color: #ffffff;
   background: rgba(255, 255, 255, 0.08);
@@ -297,6 +305,7 @@ tbody button:hover {
 }
 
 .metric {
+  text-align: left;
   min-height: 106px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -305,6 +314,11 @@ tbody button:hover {
   box-shadow: var(--small-shadow);
   display: grid;
   align-content: space-between;
+}
+
+.metric:hover {
+  border-color: var(--green);
+  transform: translateY(-1px);
 }
 
 .metric span,
