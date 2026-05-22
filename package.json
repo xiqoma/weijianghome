@@ -1,0 +1,25 @@
+{
+  "name": "weijianghome",
+  "private": true,
+  "version": "1.0.0",
+  "description": "WeijiangHome / 唯匠家居 furniture retail, merchant dashboard, AR preview, and AI Agent evidence demo.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "playwright": "^1.60.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12"
+  },
+  "dependencies": {
+    "lucide-react": "^1.16.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}
